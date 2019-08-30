@@ -1,5 +1,5 @@
-name: 'Close Stale Issues'
-description: 'Action to close stale issues'
+name: 'Stale Bot (enable onlyLabels)'
+description: 'Action to close stale issues (enable onlyLabels)'
 author: 'GitHub'
 inputs:
   repo-token:
