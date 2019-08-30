@@ -12,9 +12,9 @@ type Args = {
   daysBeforeStale: number;
   daysBeforeClose: number;
   staleIssueLabel: string;
-  exemptIssueLabel: string;
+  onlyIssueLabel: string;
   stalePrLabel: string;
-  exemptPrLabel: string;
+  onlyPrLabel: string;
   operationsPerRun: number;
 };
 
@@ -61,9 +61,9 @@ async function processIssues(
     }
 
     let staleLabel = isPr ? args.stalePrLabel : args.staleIssueLabel;
-    let exemptLabel = isPr ? args.exemptPrLabel : args.exemptIssueLabel;
+    let onlyLabel = isPr ? args.onlyPrLabel : args.onlyIssueLabel;
 
-    if (exemptLabel && isLabeled(issue, exemptLabel)) {
+    if (onlyLabel && !isLabeled(issue, onlyLabel)) {
       continue;
     } else if (isLabeled(issue, staleLabel)) {
       if (wasLastUpdatedBefore(issue, args.daysBeforeClose)) {
@@ -156,9 +156,9 @@ function getAndValidateArgs(): Args {
       core.getInput('days-before-close', {required: true})
     ),
     staleIssueLabel: core.getInput('stale-issue-label', {required: true}),
-    exemptIssueLabel: core.getInput('exempt-issue-label'),
+    onlyIssueLabel: core.getInput('only-issue-label'),
     stalePrLabel: core.getInput('stale-pr-label', {required: true}),
-    exemptPrLabel: core.getInput('exempt-pr-label'),
+    onlyPrLabel: core.getInput('only-pr-label'),
     operationsPerRun: parseInt(
       core.getInput('operations-per-run', {required: true})
     )
